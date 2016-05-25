@@ -16,10 +16,6 @@ public class WorkList {
         tcpComposeWorkList = new HashMap<>();
     }
 
-    public HashMap getWorkList(){
-        return tcpComposeWorkList;
-    }
-
     public void addAlternative(Job job,Alternatives alternative){
         ArrayList alternativesList = tcpComposeWorkList.get(job) ;
         if(alternativesList == null){
@@ -27,6 +23,10 @@ public class WorkList {
         }
         alternativesList.add(alternative);
         tcpComposeWorkList.put(job,alternativesList);
+    }
+
+    public ArrayList<Alternatives> getAlternativesList(Job job){
+        return tcpComposeWorkList.get(job);
     }
 
 }

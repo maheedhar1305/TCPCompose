@@ -8,13 +8,23 @@ import java.util.ArrayList;
 public class Alternatives<T> {
 
     private T node_representation;
-    private int value;
     private int no_of_attributes;
     private ArrayList<String> attributes;
 
     public Alternatives(T representation ,int no){
         node_representation = representation;
         no_of_attributes = no;
-        attributes = new ArrayList<>(no);
+    }
+
+    public ArrayList<String> getAttributes() {
+        return attributes;
+    }
+
+    public int getNo_of_attributes() {
+        return no_of_attributes;
+    }
+
+    public T getNode_representation() {
+        return node_representation;
     }
 }

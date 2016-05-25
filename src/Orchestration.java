@@ -2,6 +2,7 @@ import reasoner.MockPreferenceReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
+import tree.traversal.TCPCompose;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,6 +48,6 @@ public class Orchestration {
         workList.addAlternative(job3,job3alt3);
         workList.addAlternative(job4,job4alt1);
         workList.addAlternative(job4,job4alt2);
-
+        new TCPCompose().findOptimalCompositions(workList,orderedWorkList);
     }
 }

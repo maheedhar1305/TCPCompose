@@ -1,5 +1,7 @@
 package tree.structure;
 
+import scheduling.Alternatives;
+
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -16,11 +18,12 @@ public class Node<T> {
     private ArrayList<Node> chainSoFar;
     private boolean startNode = false;
     private boolean endNode = false;
+    private int level;
 
-    public Node(T representation ,int no){
-        node_representation = representation;
-        no_of_attributes = no;
-        attributes = new ArrayList<>(no);
+    public Node(Alternatives option,int level){
+        node_representation = (T)option.getNode_representation(); //todo this type casting should not be a problem at run time..double check though
+        no_of_attributes = option.getNo_of_attributes();
+        this.level = level;
     }
 
     public void setStartNode(){
@@ -47,4 +50,7 @@ public class Node<T> {
         child.connectToALink(chain);
     }
 
+    public int getLevel() {
+        return level;
+    }
 }
