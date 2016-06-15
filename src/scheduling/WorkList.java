@@ -29,4 +29,13 @@ public class WorkList {
         return tcpComposeWorkList.get(job);
     }
 
+    public Job getJob(Job some){
+        for(Job job : tcpComposeWorkList.keySet()){
+            if(job.equals(some)){
+                return job;
+            }
+        }
+        return null;
+    }
+
 }

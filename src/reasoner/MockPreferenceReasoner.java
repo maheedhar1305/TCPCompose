@@ -9,6 +9,7 @@ import java.util.HashSet;
  * Created by maheedhar on 5/19/16.
  */
 public class MockPreferenceReasoner<T> {
+
     public static <T> ArrayList<T> returnOrder(HashSet<T> items){
         ArrayList<T> weakOrder = new ArrayList<>();
         for(T item : items){
@@ -34,7 +35,6 @@ public class MockPreferenceReasoner<T> {
         temp.add(element);
         temp.add(consideredElement);
         ArrayList<T> order= MockPreferenceReasoner.returnOrder(temp);
-        //todo !!!!must make sure this equals operation performs as expected!!!!
         if(order.get(0).equals(element))
             return true;
         else

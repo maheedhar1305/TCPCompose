@@ -1,4 +1,4 @@
-package tree.traversal;
+package tree.structure;
 
 import tree.structure.Node;
 
@@ -11,22 +11,22 @@ import java.util.TreeSet;
  */
 public class Frontier {
 
-    private HashSet<ArrayList<Node>> expansionFrontier;
+    private HashSet<Path> expansionFrontier;
 
     public Frontier(){
         expansionFrontier = new HashSet<>();
     }
 
-    public void addElement(ArrayList<Node> element){
+    public void addElement(Path element){
         expansionFrontier.add(element);
     }
 
-    public ArrayList<Node>[] getCurrentFrontier(){
-        ArrayList<Node>[] a = new ArrayList[expansionFrontier.size()];
+    public Path[] getCurrentFrontier(){
+        Path[] a = new Path[expansionFrontier.size()];
         return expansionFrontier.toArray(a);
     }
 
-    public void removeFromFrontier(ArrayList<Node> element){
+    public void removeFromFrontier(Path element){
         //todo dont know if this will work properly since the element comes after a lot of processing..
         // not sure if it will be in the same memory block
         expansionFrontier.remove(element);

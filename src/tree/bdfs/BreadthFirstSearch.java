@@ -1,19 +1,23 @@
-package tree.traversal;
+package tree.bdfs;
 
 import reasoner.MockPreferenceReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
+import tree.structure.Frontier;
 import tree.structure.Node;
+import tree.structure.ResultSet;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
- * Created by maheedhar on 5/23/16.
+ * Created by maheedhar on 6/9/16.
  */
-public class TCPCompose {
+public class BreadthFirstSearch {
 
-    //todo make sure you start from a start node and end in a goal node..must have some way of defining them
+    private HashSet<ArrayList<Node>> resultSet = new HashSet();
+
     public void findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
         Alternatives<String> startalt = new Alternatives<>("StartNode",6);
         Node<String> startNode = new Node(startalt,0);
@@ -22,22 +26,15 @@ public class TCPCompose {
 //        Node<String> goalNode = new Node(goalalt,orderedList.size()+1);
 //        goalNode.setEndNode();
         Frontier frontier = new Frontier();
-        ResultSet<ArrayList<Node>> resultSet = new ResultSet();
         ArrayList<Node> temp = new ArrayList<Node>();
         temp.add(startNode);
-        frontier.addElement(temp);
+        //frontier.addElement(temp);todo remove comment
         //todo is there any other condition than empty frontier to end the loop?
         while(!frontier.isEmpty()){
             ArrayList<Node> candidate = chooseNextToExpand(frontier);
-            frontier.removeFromFrontier(candidate);
+            //frontier.removeFromFrontier(candidate); todo remove comment
             if(!exploreNextLevel(frontier,candidate,orderedList,workList)){
-                //we have reached goal node in one of the frontiers
-                if(resultSet.addElementToResultSet(candidate)){
-                    System.out.println("The new solution was added to result set");
-                }else{
-                    System.out.println("The new solution was NOT added to result set since it was not a non dominating set");
-                }
-
+                resultSet.add(candidate);
             }
         }
     }
@@ -49,13 +46,16 @@ public class TCPCompose {
         // but the first job in ordered list will be in index 0
         if(orderedList.size() > levelToExplore){
             Job newJob = orderedList.get(levelToExplore);
+            //todo need to add code if we need to skip some levels
+            //some kind of flexible code that can skip levels or decide which is the job that needs to be expanded next based on some criteris
+            //for example : if coverage is a parameter and it covers some layers then we need not expand those layers
             ArrayList<Alternatives> newAlternatives = workList.getAlternativesList(newJob);
             //creating new frontier entries with expandedPath
             for(Alternatives alternative : newAlternatives){
                 Node newNode = new Node(alternative,depthOfExpandedPath+1);
                 ArrayList<Node> newPath = new ArrayList<>(toBeExpandedPath);
                 newPath.add(newNode);
-                frontier.addElement(newPath);
+                //frontier.addElement(newPath); todo remove comment
             }
             return true;
         }
@@ -64,6 +64,8 @@ public class TCPCompose {
     }
 
     public ArrayList chooseNextToExpand(Frontier frontier){
-        return MockPreferenceReasoner.returnOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
+        //return frontier.getCurrentFrontier()[0]; //choose the best one to expand,so first one is chosen todo remove comment
+        return null;
     }
+
 }

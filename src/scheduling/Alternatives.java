@@ -27,4 +27,17 @@ public class Alternatives<T> {
     public T getNode_representation() {
         return node_representation;
     }
+
+    @Override
+    public int hashCode() {
+        return node_representation.toString().hashCode();
+    }
+
+    public boolean equals(Object obj){
+        return node_representation.toString().equals(((Alternatives)obj).getNode_representation().toString());
+    }
+
+    public String toString(){
+        return node_representation.toString();
+    }
 }

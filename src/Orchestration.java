@@ -2,10 +2,13 @@ import reasoner.MockPreferenceReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
-import tree.traversal.TCPCompose;
+import thirdParty.TcpComposeCommunicator;
+import tree.bdfs.BreadthFirstSearch;
+import tree.tcpCompose.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by maheedhar on 5/23/16.
@@ -48,6 +51,12 @@ public class Orchestration {
         workList.addAlternative(job3,job3alt3);
         workList.addAlternative(job4,job4alt1);
         workList.addAlternative(job4,job4alt2);
-        new TCPCompose().findOptimalCompositions(workList,orderedWorkList);
+        new TCPCompose(new TcpComposeCommunicator() {
+            @Override
+            public Set<Job> getCoverage(Alternatives alternatives) {
+                return null;
+            }
+        }).findOptimalCompositions(workList,orderedWorkList);
+        new BreadthFirstSearch().findOptimalCompositions(workList,orderedWorkList);
     }
 }

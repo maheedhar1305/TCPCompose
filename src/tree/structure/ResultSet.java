@@ -1,4 +1,4 @@
-package tree.traversal;
+package tree.structure;
 
 import reasoner.MockPreferenceReasoner;
 
@@ -9,15 +9,15 @@ import java.util.Iterator;
 /**
  * Created by maheedhar on 5/23/16.
  */
-public class ResultSet<T> {
+public class ResultSet {
 
-    private HashSet<T> tcpComposeResultSet;
+    private HashSet<Path> tcpComposeResultSet;
 
     public ResultSet(){
         tcpComposeResultSet = new HashSet<>();
     }
 
-    public boolean addElementToResultSet(T element){
+    public boolean addElementToResultSet(Path element){
         if (isNonDominatingSet(element)){
             removeLessPreferredSolutions(element);
             tcpComposeResultSet.add(element);
@@ -26,20 +26,20 @@ public class ResultSet<T> {
             return false;
     }
 
-    public void removeLessPreferredSolutions(T element){
-        for(Iterator<T> iterable = tcpComposeResultSet.iterator();iterable.hasNext();){
-            T consideredElement = iterable.next();
+    public void removeLessPreferredSolutions(Path element){
+        for(Iterator<Path> iterable = tcpComposeResultSet.iterator();iterable.hasNext();){
+            Path consideredElement = iterable.next();
             if(MockPreferenceReasoner.isBetterThan(element,consideredElement)){
                 iterable.remove();
             }
         }
     }
 
-    private boolean isNonDominatingSet(T element) {
+    private boolean isNonDominatingSet(Path element) {
         //cannot merge this into the snippet in addElementToresultSet. Too many uncertainities where removing an element from
         //result set should not be done in each step
-        for(Iterator<T> iter = tcpComposeResultSet.iterator();iter.hasNext();){
-            T consideredElement = iter.next();
+        for(Iterator<Path> iter = tcpComposeResultSet.iterator();iter.hasNext();){
+            Path consideredElement = iter.next();
             if(MockPreferenceReasoner.isBetterThan(consideredElement,element)){
                 return false;
             }
