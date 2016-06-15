@@ -23,7 +23,10 @@ public abstract class AbstractAlgorithm implements Algorithm {
         Node newNode = new Node(alternative,toBeExpandedPath.getWorkingLevel()+1);
         ArrayList<Node> newPath = new ArrayList<>(toBeExpandedPath.getPath());
         newPath.add(newNode);
-        frontier.addElement(new Path(newPath,toBeExpandedPath.getWorkingLevel()+1));
+        Path pathObject = new Path(newPath,toBeExpandedPath.getWorkingLevel()+1);
+        pathObject.setCoveredWorkList(toBeExpandedPath.getCoveredWorkList());
+        pathObject.setCovered(toBeExpandedPath.getCovered());
+        frontier.addElement(pathObject);
     }
 
 }
