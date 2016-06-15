@@ -3,8 +3,8 @@ import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
 import thirdParty.TcpComposeCommunicator;
-import tree.bdfs.BreadthFirstSearch;
-import tree.tcpCompose.*;
+import tree.algorithms.bdfs.BreadthFirstSearch;
+import tree.algorithms.tcpCompose.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;

@@ -1,10 +1,11 @@
-package tree.tcpCompose;
+package tree.algorithms.tcpCompose;
 
 import reasoner.MockPreferenceReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
 import thirdParty.TcpComposeCommunicator;
+import tree.algorithms.AbstractAlgorithm;
 import tree.structure.Frontier;
 import tree.structure.Node;
 import tree.structure.Path;
@@ -16,18 +17,16 @@ import java.util.HashSet;
 /**
  * Created by maheedhar on 5/23/16.
  */
-public class TCPCompose {
+public class TCPCompose extends AbstractAlgorithm{
 
-    public HashSet<Job> covered;
     private TcpComposeCommunicator tcpComposeCommunicator;
-    private Frontier frontier ;
     private ResultSet resultSet ;
 
+
     public TCPCompose(TcpComposeCommunicator tcpComposeCommunicator){
-        covered = new HashSet<>();
-        this.tcpComposeCommunicator = tcpComposeCommunicator;
-        frontier = new Frontier();
+        super();
         resultSet = new ResultSet();
+        this.tcpComposeCommunicator = tcpComposeCommunicator;
     }
 
     //todo make sure you start from a start node and end in a goal node..must have some way of defining them
@@ -39,7 +38,7 @@ public class TCPCompose {
         temp.add(startNode);
         frontier.addElement(new Path(temp,0));
         while(!frontier.isEmpty()){
-            Path candidate = chooseNextToExpand(frontier);
+            Path candidate = chooseNextToExpand();
             updateCoverage(candidate);
             frontier.removeFromFrontier(candidate); //todo check if the correct reference comes to this block
             if(!exploreNextLevel(candidate,orderedList,workList)){
@@ -88,14 +87,7 @@ public class TCPCompose {
             return false;
     }
 
-    public void createNewPath(Path toBeExpandedPath, Alternatives alternative){
-        Node newNode = new Node(alternative,toBeExpandedPath.getWorkingLevel()+1);
-        ArrayList<Node> newPath = new ArrayList<>(toBeExpandedPath.getPath());
-        newPath.add(newNode);
-        frontier.addElement(new Path(newPath,toBeExpandedPath.getWorkingLevel()+1));
-    }
-
-    public Path chooseNextToExpand(Frontier frontier){
+    public Path chooseNextToExpand(){
         return MockPreferenceReasoner.returnOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }
