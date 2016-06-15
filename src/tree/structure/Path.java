@@ -77,4 +77,16 @@ public class Path {
             level++;
         }
     }
+
+    public HashMap<Job, Alternatives> getCoveredWorkList() {
+        return coveredWorkList;
+    }
+
+    public void setCoveredWorkList(HashMap<Job, Alternatives> coveredWorkList) {
+        this.coveredWorkList = coveredWorkList;
+    }
+
+    public void setCovered(HashSet<Job> covered) {
+        this.covered = covered;
+    }
 }

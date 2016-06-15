@@ -19,7 +19,7 @@ import java.util.HashSet;
  */
 public class TCPCompose extends AbstractAlgorithm{
 
-    private TcpComposeCommunicator tcpComposeCommunicator;
+    protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
 
 
