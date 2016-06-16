@@ -29,7 +29,6 @@ public class TCPCompose extends AbstractAlgorithm{
         this.tcpComposeCommunicator = tcpComposeCommunicator;
     }
 
-    //todo make sure you start from a start node and end in a goal node..must have some way of defining them
     public void findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
         Alternatives<String> startalt = new Alternatives<>("StartNode",6);
         Node<String> startNode = new Node(startalt,0);
@@ -40,7 +39,7 @@ public class TCPCompose extends AbstractAlgorithm{
         while(!frontier.isEmpty()){
             Path candidate = chooseNextToExpand();
             updateCoverage(candidate);
-            frontier.removeFromFrontier(candidate); //todo check if the correct reference comes to this block
+            frontier.removeFromFrontier(candidate);
             if(!exploreNextLevel(candidate,orderedList,workList)){
                 //we have reached goal node in one of the frontiers
                 if(resultSet.addElementToResultSet(candidate)){
@@ -60,7 +59,7 @@ public class TCPCompose extends AbstractAlgorithm{
         Node current = candidate.getCurrentNode();
         if(current.getLevel()!=0){//because start node does not fall under coverage category
             Alternatives response = (Alternatives) current.getNode_representation();
-            candidate.addToCoverage(tcpComposeCommunicator.getCoverage(response),response);//todo implement this method
+            candidate.addToCoverage(tcpComposeCommunicator.getCoverage(response),response);
         }
     }
 

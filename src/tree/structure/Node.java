@@ -21,7 +21,7 @@ public class Node<T> {
     private int level;
 
     public Node(Alternatives option,int level){
-        node_representation = (T)option ; //todo this type casting should not be a problem at run time..double check though
+        node_representation = (T)option ;
         no_of_attributes = option.getNo_of_attributes();
         this.level = level;
     }

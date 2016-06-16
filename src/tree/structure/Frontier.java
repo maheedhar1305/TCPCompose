@@ -27,8 +27,6 @@ public class Frontier {
     }
 
     public void removeFromFrontier(Path element){
-        //todo dont know if this will work properly since the element comes after a lot of processing..
-        // not sure if it will be in the same memory block
         expansionFrontier.remove(element);
     }
 
