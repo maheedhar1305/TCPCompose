@@ -1,6 +1,7 @@
 package scheduling;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by maheedhar on 5/23/16.
@@ -9,14 +10,18 @@ public class Alternatives<T> {
 
     private T node_representation;
     private int no_of_attributes;
-    private ArrayList<String> attributes;
+    private HashMap<String,String> attributes;
 
     public Alternatives(T representation ,int no){
         node_representation = representation;
         no_of_attributes = no;
     }
 
-    public ArrayList<String> getAttributes() {
+    public void setAttributes(HashMap<String, String> attributes) {
+        this.attributes = attributes;
+    }
+
+    public HashMap<String,String> getAttributes() {
         return attributes;
     }
 
