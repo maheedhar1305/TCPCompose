@@ -17,12 +17,30 @@ public class Path {
     private int workingLevel;
     private HashSet<Job> covered;
     private HashMap<Job,Alternatives> coveredWorkList;
+    private HashMap<String,String> betaMostPreferedCompletion ;
+    private HashMap<String,String> preferenceValuation;
 
     public Path(ArrayList<Node> temp,int currentLevel) {
         path = temp;
         covered = new HashSet<>();
         coveredWorkList = new HashMap<>();
         workingLevel = currentLevel;
+    }
+
+    public HashMap<String, String> getBetaMostPreferedCompletion() {
+        return betaMostPreferedCompletion;
+    }
+
+    public HashMap<String, String> getPreferenceValuation() {
+        return preferenceValuation;
+    }
+
+    public void setBetaMostPreferedCompletion(HashMap<String, String> betaMostPreferedCompletion) {
+        this.betaMostPreferedCompletion = betaMostPreferedCompletion;
+    }
+
+    public void setPreferenceValuation(HashMap<String, String> preferenceValuation) {
+        this.preferenceValuation = preferenceValuation;
     }
 
     public HashSet<Job> getCovered() {

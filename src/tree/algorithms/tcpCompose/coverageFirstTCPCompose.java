@@ -15,8 +15,8 @@ import java.util.HashSet;
  */
 public class coverageFirstTCPCompose extends TCPCompose {
 
-    public coverageFirstTCPCompose(TcpComposeCommunicator tcpComposeCommunicator){
-        super(tcpComposeCommunicator);
+    public coverageFirstTCPCompose(TcpComposeCommunicator tcpComposeCommunicator,HashMap<String, String> configValues){
+        super(tcpComposeCommunicator,configValues);
     }
 
     //The emphasis here is to expand the response which has the most coverage going forward

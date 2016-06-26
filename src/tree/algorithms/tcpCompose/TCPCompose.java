@@ -6,12 +6,14 @@ import scheduling.Job;
 import scheduling.WorkList;
 import thirdParty.TcpComposeCommunicator;
 import tree.algorithms.AbstractAlgorithm;
+import tree.algorithms.tcpCompose.helpers.WorstFrontierCalculator;
 import tree.structure.Frontier;
 import tree.structure.Node;
 import tree.structure.Path;
 import tree.structure.ResultSet;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -21,21 +23,42 @@ public class TCPCompose extends AbstractAlgorithm{
 
     protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
+    private HashMap<String, String> configValues;
 
 
-    public TCPCompose(TcpComposeCommunicator tcpComposeCommunicator){
-        super();
+    public TCPCompose(TcpComposeCommunicator prefEvaluatorInterface, HashMap<String, String> configValues) {
+        super(new WorstFrontierCalculator(configValues.get("ValueOrderlocation")));
         resultSet = new ResultSet();
-        this.tcpComposeCommunicator = tcpComposeCommunicator;
+        this.tcpComposeCommunicator = prefEvaluatorInterface;
+        this.configValues = configValues;
+    }
+
+    private HashMap<String,String> getPreferedValues() {
+        HashMap<String,String> result = new HashMap<>(configValues);
+        result.remove("ValueOrderlocation");
+        return result;
+    }
+
+    private HashMap<String,String> initialiseValuation(HashMap<String, String> startingBetaMostPreferedCompletion) {
+        HashMap<String,String> result = new HashMap<>();
+        for(String key : startingBetaMostPreferedCompletion.keySet()){
+            result.put(key,"NULL");
+        }
+        return result;
     }
 
     public void findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
+        HashMap<String,String> startingBetaMostPreferedCompletion = getPreferedValues();
+        HashMap<String,String> startingPreferenceValuation = initialiseValuation(startingBetaMostPreferedCompletion);
         Alternatives<String> startalt = new Alternatives<>("StartNode",6);
         Node<String> startNode = new Node(startalt,0);
         startNode.setStartNode();
         ArrayList<Node> temp = new ArrayList<Node>();
         temp.add(startNode);
-        frontier.addElement(new Path(temp,0));
+        Path tempPath= new Path(temp,0);
+        tempPath.setBetaMostPreferedCompletion(startingBetaMostPreferedCompletion);
+        tempPath.setPreferenceValuation(startingPreferenceValuation);
+        frontier.addElement(tempPath);
         while(!frontier.isEmpty()){
             Path candidate = chooseNextToExpand();
             updateCoverage(candidate);

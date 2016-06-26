@@ -1,6 +1,7 @@
 package tree.algorithms;
 
 import scheduling.Alternatives;
+import tree.algorithms.tcpCompose.helpers.WorstFrontierCalculator;
 import tree.structure.Frontier;
 import tree.structure.Node;
 import tree.structure.Path;
@@ -14,9 +15,11 @@ import java.util.ArrayList;
 public abstract class AbstractAlgorithm implements Algorithm {
 
     protected Frontier frontier ;
+    protected WorstFrontierCalculator worstFrontierCalculator;
 
-    protected AbstractAlgorithm(){
+    protected AbstractAlgorithm(WorstFrontierCalculator worstFrontierCalculator){
         frontier = new Frontier();
+        this.worstFrontierCalculator = worstFrontierCalculator;
     }
 
     public void createNewPath(Path toBeExpandedPath, Alternatives alternative){
@@ -26,6 +29,8 @@ public abstract class AbstractAlgorithm implements Algorithm {
         Path pathObject = new Path(newPath,toBeExpandedPath.getWorkingLevel()+1);
         pathObject.setCoveredWorkList(toBeExpandedPath.getCoveredWorkList());
         pathObject.setCovered(toBeExpandedPath.getCovered());
+        pathObject.setPreferenceValuation(worstFrontierCalculator.computeWorstFrontier(toBeExpandedPath.getPreferenceValuation(),alternative.getAttributes()));
+        pathObject.setBetaMostPreferedCompletion(worstFrontierCalculator.computeWorstFrontier(toBeExpandedPath.getBetaMostPreferedCompletion(),alternative.getAttributes()));
         frontier.addElement(pathObject);
     }
 

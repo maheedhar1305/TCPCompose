@@ -20,7 +20,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
     HashSet<Path> resultSet;
 
     public BreadthFirstSearch(){
-        super();
+        super(null);
         resultSet = new HashSet<>();
     }
 
