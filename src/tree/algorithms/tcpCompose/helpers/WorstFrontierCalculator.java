@@ -14,7 +14,6 @@ import java.util.Set;
 public class WorstFrontierCalculator {
 
     private HashMap<String,HashMap<String,Integer>> valueOrder;
-    //todo need to have something not hard coded for path
     private String sourceFile;
 
     public WorstFrontierCalculator(String name){
@@ -23,6 +22,7 @@ public class WorstFrontierCalculator {
         valueOrder = getValueOrder();
     }
 
+    //to read the value order from file
     public HashMap<String,HashMap<String,Integer>> getValueOrder() {
         HashMap<String,HashMap<String,Integer>> cVals = new HashMap<>();
         try(BufferedReader br = new BufferedReader(new FileReader(sourceFile))) {
@@ -62,7 +62,7 @@ public class WorstFrontierCalculator {
         return false;
     }
 
-    public HashMap<String,String> computeWorstFrontier(HashMap<String,String> val1 , HashMap<String,String> val2){
+    public HashMap<String,String> computeValWorstFrontier(HashMap<String,String> val1 , HashMap<String,String> val2){
         HashMap<String,String> result = new HashMap<>();
         for(String key : valueOrder.keySet()){
             if(val1.get(key)!=null && val2.get(key)!=null ){
@@ -70,6 +70,28 @@ public class WorstFrontierCalculator {
                     result.put(key,val1.get(key));
                 }else{
                     result.put(key,val2.get(key));
+                }
+            }else{
+                System.out.println("Unsupported attribute types");
+            }
+        }
+        return result;
+    }
+
+    public HashMap<String,String> computeBetaWorstFrontier(HashMap<String,String> betaval1 , HashMap<String,String> betaval2, HashMap<String,String> previousVal){
+        HashMap<String,String> result = new HashMap<>();
+        for(String key : valueOrder.keySet()){
+            if(betaval1.get(key)!=null && betaval2.get(key)!=null ){
+                if(previousVal.get(key).equals("NULL") && isLesserThan(key,betaval1.get(key),betaval2.get(key))){
+                    //example case : when our expectation for an attribute is PARTIAL and we have the same as beta values, but the first ever value that gets assigned is COMPLETE, then for that path we need to update beta as COMPLETE for that variable
+                    //for more understanding see the paper figure 3, the path from b2 to b2p3
+                    result.put(key,betaval2.get(key));
+                }else{
+                    if(isLesserThan(key,betaval1.get(key),betaval2.get(key))){
+                        result.put(key,betaval1.get(key));
+                    }else{
+                        result.put(key,betaval2.get(key));
+                    }
                 }
             }else{
                 System.out.println("Unsupported attribute types");
