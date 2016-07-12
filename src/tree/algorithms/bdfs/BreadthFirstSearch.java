@@ -1,11 +1,10 @@
 package tree.algorithms.bdfs;
 
-import reasoner.MockPreferenceReasoner;
+import reasoner.CrisnerPathReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
 import tree.algorithms.AbstractAlgorithm;
-import tree.structure.Frontier;
 import tree.structure.Node;
 import tree.structure.Path;
 
@@ -38,7 +37,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
                 resultSet.add(candidate);
             }
         }
-        ArrayList<Path> orderedBaseCaseResults = MockPreferenceReasoner.returnOrder(resultSet);
+        ArrayList<Path> orderedBaseCaseResults = CrisnerPathReasoner.returnPathOrder(resultSet);
         for(Path path : orderedBaseCaseResults){
             System.out.println("#####The following solution was added to result set####");
             path.printPath(orderedList);

@@ -2,19 +2,19 @@
 #property name should have a "*" appended in front of it
 #NULL should be assigned the highest value always so that, while calculation worst frontier it will be overwritten.
 
-*http://www.semanticweb.org/maheedhar/vuldb#ResponseNegativeConfidentialityImpact
+*ResponseNegativeConfidentialityImpact
 NULL = 4
 NONE = 3
 PARTIAL = 2
 COMPLETE = 1
 
-*http://www.semanticweb.org/maheedhar/vuldb#ResponseNegativeAvailabilityImpact
+*ResponseNegativeAvailabilityImpact
 NULL = 4
 NONE = 3
 PARTIAL = 2
 COMPLETE = 1
 
-*http://www.semanticweb.org/maheedhar/vuldb#ResponseNegativeIntegrityImpact
+*ResponseNegativeIntegrityImpact
 NULL = 4
 NONE = 3
 PARTIAL = 2

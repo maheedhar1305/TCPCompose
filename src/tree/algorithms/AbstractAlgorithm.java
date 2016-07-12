@@ -29,8 +29,11 @@ public abstract class AbstractAlgorithm implements Algorithm {
         Path pathObject = new Path(newPath,toBeExpandedPath.getWorkingLevel()+1);
         pathObject.setCoveredWorkList(toBeExpandedPath.getCoveredWorkList());
         pathObject.setCovered(toBeExpandedPath.getCovered());
-        pathObject.setPreferenceValuation(worstFrontierCalculator.computeValWorstFrontier(toBeExpandedPath.getPreferenceValuation(),alternative.getAttributes()));
-        pathObject.setBetaMostPreferedCompletion(worstFrontierCalculator.computeBetaWorstFrontier(toBeExpandedPath.getBetaMostPreferedCompletion(),alternative.getAttributes(),toBeExpandedPath.getPreferenceValuation()));
+        if(worstFrontierCalculator!=null){
+            //in cases like BFS
+            pathObject.setPreferenceValuation(worstFrontierCalculator.computeValWorstFrontier(toBeExpandedPath.getPreferenceValuation(),alternative.getAttributes()));
+            pathObject.setBetaMostPreferedCompletion(worstFrontierCalculator.computeBetaWorstFrontier(toBeExpandedPath.getBetaMostPreferedCompletion(),alternative.getAttributes(),toBeExpandedPath.getPreferenceValuation()));
+        }
         frontier.addElement(pathObject);
     }
 

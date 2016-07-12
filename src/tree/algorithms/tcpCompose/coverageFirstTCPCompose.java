@@ -1,11 +1,9 @@
 package tree.algorithms.tcpCompose;
 
-import reasoner.MockPreferenceReasoner;
+import reasoner.CrisnerPathReasoner;
 import scheduling.Alternatives;
 import thirdParty.TcpComposeCommunicator;
-import tree.structure.Node;
 import tree.structure.Path;
-import tree.structure.ResultSet;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -41,7 +39,7 @@ public class coverageFirstTCPCompose extends TCPCompose {
                 result.add(path);
             }
         }
-        return MockPreferenceReasoner.returnOrder(result).get(0);
+        return CrisnerPathReasoner.returnPathOrder(result).get(0);
     }
 
 }

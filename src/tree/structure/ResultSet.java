@@ -1,8 +1,7 @@
 package tree.structure;
 
-import reasoner.MockPreferenceReasoner;
+import reasoner.CrisnerPathReasoner;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -29,7 +28,7 @@ public class ResultSet {
     public void removeLessPreferredSolutions(Path element){
         for(Iterator<Path> iterable = tcpComposeResultSet.iterator();iterable.hasNext();){
             Path consideredElement = iterable.next();
-            if(MockPreferenceReasoner.isBetterThan(element,consideredElement)){
+            if(CrisnerPathReasoner.isBetterThan(element,consideredElement)){
                 iterable.remove();
             }
         }
@@ -40,7 +39,7 @@ public class ResultSet {
         //result set should not be done in each step
         for(Iterator<Path> iter = tcpComposeResultSet.iterator();iter.hasNext();){
             Path consideredElement = iter.next();
-            if(MockPreferenceReasoner.isBetterThan(consideredElement,element)){
+            if(CrisnerPathReasoner.isBetterThan(consideredElement,element)){
                 return false;
             }
         }

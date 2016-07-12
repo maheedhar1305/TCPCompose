@@ -1,20 +1,18 @@
 package tree.algorithms.tcpCompose;
 
-import reasoner.MockPreferenceReasoner;
+import reasoner.CrisnerPathReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
 import thirdParty.TcpComposeCommunicator;
 import tree.algorithms.AbstractAlgorithm;
 import tree.algorithms.tcpCompose.helpers.WorstFrontierCalculator;
-import tree.structure.Frontier;
 import tree.structure.Node;
 import tree.structure.Path;
 import tree.structure.ResultSet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 
 /**
  * Created by maheedhar on 5/23/16.
@@ -110,6 +108,6 @@ public class TCPCompose extends AbstractAlgorithm{
     }
 
     public Path chooseNextToExpand(){
-        return MockPreferenceReasoner.returnOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
+        return CrisnerPathReasoner.returnPathOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }
