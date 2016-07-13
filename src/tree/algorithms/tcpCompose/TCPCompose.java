@@ -1,6 +1,6 @@
 package tree.algorithms.tcpCompose;
 
-import reasoner.CrisnerPathReasoner;
+import reasoner.CrisnerReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
@@ -23,12 +23,12 @@ public class TCPCompose extends AbstractAlgorithm{
     protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
     private HashMap<String, String> configValues;
-    protected CrisnerPathReasoner crisnerPathReasoner;
+    protected CrisnerReasoner crisnerPathReasoner;
 
 
     public TCPCompose(TcpComposeCommunicator prefEvaluatorInterface, HashMap<String, String> configValues) {
         super(new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
-        crisnerPathReasoner = new CrisnerPathReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
+        crisnerPathReasoner = new CrisnerReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
         resultSet = new ResultSet(crisnerPathReasoner);
         this.tcpComposeCommunicator = prefEvaluatorInterface;
         this.configValues = configValues;
@@ -114,6 +114,6 @@ public class TCPCompose extends AbstractAlgorithm{
     }
 
     public Path chooseNextToExpand(){
-        return crisnerPathReasoner.returnPathOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
+        return (Path)crisnerPathReasoner.returnOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }

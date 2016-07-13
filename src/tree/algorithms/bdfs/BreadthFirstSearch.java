@@ -1,6 +1,6 @@
 package tree.algorithms.bdfs;
 
-import reasoner.CrisnerPathReasoner;
+import reasoner.CrisnerReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
@@ -20,13 +20,13 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
 
     //The enormous result set size is justified, do a multiplication of all possible responses possible at each level
     private HashSet<Path> resultSet;
-    private CrisnerPathReasoner crisnerPathReasoner;
+    private CrisnerReasoner crisnerPathReasoner;
     private HashMap<String, String> configValues;
 
     public BreadthFirstSearch(HashMap<String, String> configValues){
         super(new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
         this.configValues = configValues;
-        crisnerPathReasoner = new CrisnerPathReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
+        crisnerPathReasoner = new CrisnerReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
         this.configValues.remove("NegativeImpactValueOrderlocation");
         this.configValues.remove("NegativeImpactPrefOrderlocation");
         this.configValues.remove("OrganizationalCIAPrefOrderlocation");
@@ -66,7 +66,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
                 resultSet.add(candidate);
             }
         }
-        ArrayList<Path> orderedBaseCaseResults = crisnerPathReasoner.returnPathOrder(resultSet);
+        ArrayList<Path> orderedBaseCaseResults = crisnerPathReasoner.returnOrder(resultSet);
         for(Path path : orderedBaseCaseResults){
             System.out.println("#####The following solution was added to result set####");
             path.printPath(orderedList);

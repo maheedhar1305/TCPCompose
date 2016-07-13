@@ -1,6 +1,5 @@
 package tree.algorithms.tcpCompose;
 
-import reasoner.CrisnerPathReasoner;
 import scheduling.Alternatives;
 import thirdParty.TcpComposeCommunicator;
 import tree.structure.Path;
@@ -39,7 +38,7 @@ public class coverageFirstTCPCompose extends TCPCompose {
                 result.add(path);
             }
         }
-        return crisnerPathReasoner.returnPathOrder(result).get(0);
+        return (Path)crisnerPathReasoner.returnOrder(result).get(0);
     }
 
 }

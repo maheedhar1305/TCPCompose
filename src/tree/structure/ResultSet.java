@@ -1,6 +1,6 @@
 package tree.structure;
 
-import reasoner.CrisnerPathReasoner;
+import reasoner.CrisnerReasoner;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,9 +11,9 @@ import java.util.Iterator;
 public class ResultSet {
 
     private HashSet<Path> tcpComposeResultSet;
-    private CrisnerPathReasoner crisnerPathReasoner;
+    private CrisnerReasoner crisnerPathReasoner;
 
-    public ResultSet(CrisnerPathReasoner crisnerPathReasoner){
+    public ResultSet(CrisnerReasoner crisnerPathReasoner){
         this.crisnerPathReasoner = crisnerPathReasoner;
         tcpComposeResultSet = new HashSet<>();
     }
