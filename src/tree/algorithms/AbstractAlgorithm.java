@@ -30,7 +30,6 @@ public abstract class AbstractAlgorithm implements Algorithm {
         pathObject.setCoveredWorkList(toBeExpandedPath.getCoveredWorkList());
         pathObject.setCovered(toBeExpandedPath.getCovered());
         if(worstFrontierCalculator!=null){
-            //in cases like BFS
             pathObject.setPreferenceValuation(worstFrontierCalculator.computeValWorstFrontier(toBeExpandedPath.getPreferenceValuation(),alternative.getAttributes()));
             pathObject.setBetaMostPreferedCompletion(worstFrontierCalculator.computeBetaWorstFrontier(toBeExpandedPath.getBetaMostPreferedCompletion(),alternative.getAttributes(),toBeExpandedPath.getPreferenceValuation()));
         }

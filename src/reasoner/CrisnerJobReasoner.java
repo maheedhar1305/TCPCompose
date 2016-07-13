@@ -4,6 +4,7 @@ import model.Outcome;
 import model.PreferenceQuery;
 import model.Query;
 import model.QueryResult;
+import scheduling.Job;
 import test.CPTheoryDominanceExperimentDriver;
 import tree.structure.Path;
 import util.Constants;
@@ -13,58 +14,38 @@ import java.util.*;
 /**
  * Created by maheedhar on 7/11/16.
  */
-public class CrisnerPathReasoner {
+public class CrisnerJobReasoner {
 
     private String nuSMVLocation;
     private String psFileName ;
 
-    public CrisnerPathReasoner(String nuSMVLoc,String fileName){
-        nuSMVLocation = nuSMVLoc;
-        psFileName = fileName;
+    public CrisnerJobReasoner(HashMap<String, String> configValues){
+        nuSMVLocation = configValues.get("NuSMVLocation");
+        psFileName = configValues.get("OrganizationalCIAPrefOrderlocation");
     }
 
-    public ArrayList<Path> returnPathOrder(HashSet<Path> items){
-        ArrayList weakOrder = new ArrayList<Path>();
-        for(Path item : items){
+    public ArrayList<Job> returnJobOrder(HashSet<Job> items){
+        ArrayList weakOrder = new ArrayList<Job>();
+        for(Job item : items){
             weakOrder.add(item);
         }
-        Collections.sort(weakOrder,new CrisnerPathComparator());
+        Collections.sort(weakOrder,new CrisnerJobComparator());
         return weakOrder;
     }
 
-    public ArrayList<Path> returnPathOrder(Path[] items){
-        ArrayList weakOrder = new ArrayList<Path>();
-        for(Path item : items){
-            weakOrder.add(item);
-        }
-        Collections.sort(weakOrder,new CrisnerPathComparator());
-        return weakOrder;
-    }
-
-    public boolean isBetterThan(Path element,Path consideredElement) {
-        HashSet<Path> temp = new HashSet<>();
-        temp.add(element);
-        temp.add(consideredElement);
-        ArrayList<Path> order= returnPathOrder(temp);
-        if(order.get(0).equals(element))
-            return true;
-        else
-            return false;
-    }
-
-    public class CrisnerPathComparator implements Comparator<Path>{
+    public class CrisnerJobComparator implements Comparator<Job>{
 
         @Override
-        public int compare(Path o1, Path o2) {
+        public int compare(Job o1, Job o2) {
             try {
                 Constants.CURRENT_MODEL_CHECKER = Constants.MODEL_CHECKER.NuSMV;
                 Constants.SMV_EXEC_COMMAND = nuSMVLocation;
                 Set<Outcome> outcomes = new HashSet<Outcome>();
-                HashMap<String, String> map1 = o1.getBetaMostPreferedCompletion();
+                HashMap<String, String> map1 = o1.getAttributes();
                 Outcome out1 = new Outcome(map1);
                 out1.setLabel("BETTER");
                 outcomes.add(out1);
-                HashMap<String, String> map2 = o2.getBetaMostPreferedCompletion();
+                HashMap<String, String> map2 = o2.getAttributes();
                 Outcome out2 = new Outcome(map2);
                 out2.setLabel("WORSE");
                 outcomes.add(out2);

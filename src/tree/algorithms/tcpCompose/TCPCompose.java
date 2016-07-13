@@ -22,18 +22,23 @@ public class TCPCompose extends AbstractAlgorithm{
     protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
     private HashMap<String, String> configValues;
+    protected CrisnerPathReasoner crisnerPathReasoner;
 
 
     public TCPCompose(TcpComposeCommunicator prefEvaluatorInterface, HashMap<String, String> configValues) {
-        super(new WorstFrontierCalculator(configValues.get("ValueOrderlocation")));
-        resultSet = new ResultSet();
+        super(new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
+        crisnerPathReasoner = new CrisnerPathReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
+        resultSet = new ResultSet(crisnerPathReasoner);
         this.tcpComposeCommunicator = prefEvaluatorInterface;
         this.configValues = configValues;
     }
 
     private HashMap<String,String> getPreferedValues() {
         HashMap<String,String> result = new HashMap<>(configValues);
-        result.remove("ValueOrderlocation");
+        result.remove("NegativeImpactValueOrderlocation");
+        result.remove("NegativeImpactPrefOrderlocation");
+        result.remove("OrganizationalCIAPrefOrderlocation");
+        result.remove("NuSMVLocation");
         return result;
     }
 
@@ -66,7 +71,7 @@ public class TCPCompose extends AbstractAlgorithm{
                 if(resultSet.addElementToResultSet(candidate)){
                     System.out.println("#####The following solution was added to result set####");
                 }else{
-                    System.out.println("####The following solution was NOT added to result set since it was not a non dominating set####");
+                    System.out.println("#####The following solution was NOT added to result set since it was not a non dominating set####");
                 }
                 candidate.printPath(orderedList);
             }
@@ -108,6 +113,6 @@ public class TCPCompose extends AbstractAlgorithm{
     }
 
     public Path chooseNextToExpand(){
-        return CrisnerPathReasoner.returnPathOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
+        return crisnerPathReasoner.returnPathOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }

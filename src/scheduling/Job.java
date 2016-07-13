@@ -38,4 +38,8 @@ public class Job<T> {
     public void setAttributes(HashMap<String,String> attributes) {
         this.attributes = attributes;
     }
+
+    public HashMap<String, String> getAttributes() {
+        return attributes;
+    }
 }

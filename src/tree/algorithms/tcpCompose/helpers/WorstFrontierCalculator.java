@@ -85,6 +85,7 @@ public class WorstFrontierCalculator {
                 if(previousVal.get(key).equals("NULL") && isLesserThan(key,betaval1.get(key),betaval2.get(key))){
                     //example case : when our expectation for an attribute is PARTIAL and we have the same as beta values, but the first ever value that gets assigned is COMPLETE, then for that path we need to update beta as COMPLETE for that variable
                     //for more understanding see the paper figure 3, the path from b2 to b2p3
+                    //working verified
                     result.put(key,betaval2.get(key));
                 }else{
                     if(isLesserThan(key,betaval1.get(key),betaval2.get(key))){

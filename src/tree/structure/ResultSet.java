@@ -11,8 +11,10 @@ import java.util.Iterator;
 public class ResultSet {
 
     private HashSet<Path> tcpComposeResultSet;
+    private CrisnerPathReasoner crisnerPathReasoner;
 
-    public ResultSet(){
+    public ResultSet(CrisnerPathReasoner crisnerPathReasoner){
+        this.crisnerPathReasoner = crisnerPathReasoner;
         tcpComposeResultSet = new HashSet<>();
     }
 
@@ -28,7 +30,7 @@ public class ResultSet {
     public void removeLessPreferredSolutions(Path element){
         for(Iterator<Path> iterable = tcpComposeResultSet.iterator();iterable.hasNext();){
             Path consideredElement = iterable.next();
-            if(CrisnerPathReasoner.isBetterThan(element,consideredElement)){
+            if(crisnerPathReasoner.isBetterThan(element,consideredElement)){
                 iterable.remove();
             }
         }
@@ -39,7 +41,7 @@ public class ResultSet {
         //result set should not be done in each step
         for(Iterator<Path> iter = tcpComposeResultSet.iterator();iter.hasNext();){
             Path consideredElement = iter.next();
-            if(CrisnerPathReasoner.isBetterThan(consideredElement,element)){
+            if(crisnerPathReasoner.isBetterThan(consideredElement,element)){
                 return false;
             }
         }
