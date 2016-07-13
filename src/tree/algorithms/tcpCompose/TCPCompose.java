@@ -19,6 +19,7 @@ import java.util.HashMap;
  */
 public class TCPCompose extends AbstractAlgorithm{
 
+    //TCPCompose will produce less branches than the breadthfirst search because we account for coverage in the tcpcompose and NOT in BFS.
     protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
     private HashMap<String, String> configValues;

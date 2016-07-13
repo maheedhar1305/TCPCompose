@@ -18,6 +18,7 @@ import java.util.HashSet;
  */
 public class BreadthFirstSearch extends AbstractAlgorithm{
 
+    //The enormous result set size is justified, do a multiplication of all possible responses possible at each level
     private HashSet<Path> resultSet;
     private CrisnerPathReasoner crisnerPathReasoner;
     private HashMap<String, String> configValues;
