@@ -51,8 +51,21 @@ public class CrisnerResponseReasoner {
                 //since we are ordering in descending order with most impactful first. Thus we are reversing -1 and +1 roles
                 if(result.getResult()){
                     return -1; //todo verify
-                }else{
-                    return 1;
+                }else {
+                    Set<Outcome> outcomes1 = new HashSet<Outcome>();
+                    Outcome out3 = new Outcome(map1);
+                    out3.setLabel("WORSE");
+                    outcomes1.add(out3);
+                    Outcome out4 = new Outcome(map2);
+                    out4.setLabel("BETTER");
+                    outcomes1.add(out4);
+                    Query q1 = new Query(PreferenceQuery.QueryType.DOMINANCE, psFileName, outcomes1);
+                    QueryResult result1 = new CPTheoryDominanceExperimentDriver().executeQuery(q1);
+                    if (result1.getResult()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
                 }
             }catch (Exception e){
                 //this is supposed to happen during BFS because no values for beta and val in BFS
