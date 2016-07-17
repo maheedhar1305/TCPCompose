@@ -60,6 +60,26 @@ public class CrisnerReasoner<T> {
         return weakOrder;
     }
 
+    public <T> HashSet<T> returnNonDominatedSet(HashSet<T> items) {
+        HashSet<T> result = new HashSet<T>();
+        CrisnerPathComparator checker = new CrisnerPathComparator();
+        for (T candidate : items){
+            boolean nonDominated = true;
+            for (T check : items){
+                if(!check.equals(candidate)){
+                    if(checker.compare(candidate,check)==1){
+                        nonDominated = false;
+                        break;
+                    }
+                }
+            }
+            if(nonDominated){
+                result.add(candidate);
+            }
+        }
+        return result;
+    }
+
     public class CrisnerPathComparator implements Comparator{
 
         @Override
