@@ -38,7 +38,7 @@ public class coverageFirstTCPCompose extends TCPCompose {
                 result.add(path);
             }
         }
-        return (Path)crisnerPathReasoner.returnOrder(result).get(0);
+        return (Path)crisnerPathReasoner.returnNonDominatedSet(result).get(0);
     }
 
 }

@@ -48,4 +48,7 @@ public class ResultSet {
         return true;
     }
 
+    public HashSet<Path> getTcpComposeResultSet() {
+        return tcpComposeResultSet;
+    }
 }

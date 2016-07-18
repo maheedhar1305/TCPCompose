@@ -66,8 +66,8 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
                 resultSet.add(candidate);
             }
         }
-        //ArrayList<Path> orderedBaseCaseResults = crisnerPathReasoner.returnOrder(resultSet);
-        HashSet<Path> orderedBaseCaseResults = crisnerPathReasoner.returnNonDominatedSet(resultSet);
+        //ArrayList<Path> orderedBaseCaseResults = crisnerPathReasoner.returnNonDominatedSet(resultSet);
+        ArrayList<Path> orderedBaseCaseResults = crisnerPathReasoner.returnNonDominatedSet(resultSet);
         for(Path path : orderedBaseCaseResults){
             System.out.println("#####The following solution was added to result set####");
             path.printPath(orderedList);

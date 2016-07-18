@@ -25,7 +25,12 @@ public class CrisnerReasoner<T> {
         psFileName = fileName;
     }
 
-    public <T> ArrayList<T> returnOrder(HashSet<T> items){
+    public <T> ArrayList<T> returnNonDominatedSet(HashSet<T> items){
+        HashSet<T> weakOrder = __returnNonDominatedSet(items);
+        return new ArrayList(weakOrder);
+    }
+
+    public <T> ArrayList<T> returnWeakOrder(HashSet<T> items){
         ArrayList weakOrder = new ArrayList<T>();
         for(T item : items){
             weakOrder.add(item);
@@ -34,33 +39,32 @@ public class CrisnerReasoner<T> {
         return weakOrder;
     }
 
-    public <T> ArrayList<T> returnOrder(T[] items){
+    public <T> ArrayList<T> returnNonDominatedSet(T[] items){
         ArrayList weakOrder = new ArrayList<T>();
         for(T item : items){
             weakOrder.add(item);
         }
-        Collections.sort(weakOrder,new CrisnerPathComparator());
-        return weakOrder;
+        HashSet<T> result = __returnNonDominatedSet(new HashSet<T>(weakOrder));
+        return new ArrayList(result);
     }
 
     public boolean isBetterThan(T element,T consideredElement) {
         HashSet<T> temp = new HashSet<>();
         temp.add(element);
         temp.add(consideredElement);
-        ArrayList<T> order= returnOrder(temp);
+        ArrayList<T> order= returnNonDominatedSet(temp);
         if(order.get(0).equals(element))
             return true;
         else
             return false;
     }
 
-    public <T> ArrayList<T> returnOrder(ArrayList<T> items) {
-        ArrayList weakOrder = new ArrayList(items);
-        Collections.sort(weakOrder,new CrisnerPathComparator());
-        return weakOrder;
+    public <T> ArrayList<T> returnNonDominatedSet(ArrayList<T> items) {
+        HashSet<T> weakOrder = __returnNonDominatedSet(new HashSet<T>(items));
+        return new ArrayList(weakOrder);
     }
 
-    public <T> HashSet<T> returnNonDominatedSet(HashSet<T> items) {
+    public <T> HashSet<T> __returnNonDominatedSet(HashSet<T> items) {
         HashSet<T> result = new HashSet<T>();
         CrisnerPathComparator checker = new CrisnerPathComparator();
         for (T candidate : items){

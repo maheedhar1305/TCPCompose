@@ -72,10 +72,15 @@ public class TCPCompose extends AbstractAlgorithm{
                 if(resultSet.addElementToResultSet(candidate)){
                     System.out.println("#####The following solution was added to result set####");
                 }else{
-                    System.out.println("#####The following solution was NOT added to result set since it was not a non dominating set####");
+                    System.out.println("$$$$$The following solution was NOT added to result set since it was not a non dominating set$$$$");
                 }
                 candidate.printPath(orderedList);
             }
+        }
+        System.out.println("The non-dominated sets in the end comprises of");
+        for(Path path : resultSet.getTcpComposeResultSet()){
+            System.out.println("&&&&&The following solution&&&&");
+            path.printPath(orderedList);
         }
     }
 
@@ -114,6 +119,6 @@ public class TCPCompose extends AbstractAlgorithm{
     }
 
     public Path chooseNextToExpand(){
-        return (Path)crisnerPathReasoner.returnOrder(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
+        return (Path)crisnerPathReasoner.returnNonDominatedSet(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }
