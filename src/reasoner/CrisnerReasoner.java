@@ -67,8 +67,10 @@ public class CrisnerReasoner<T> {
     public <T> HashSet<T> __returnNonDominatedSet(HashSet<T> items) {
         HashSet<T> result = new HashSet<T>();
         CrisnerPathComparator checker = new CrisnerPathComparator();
+        int count = 0;
         for (T candidate : items){
             boolean nonDominated = true;
+            int innerCount = 0;
             for (T check : items){
                 if(!check.equals(candidate)){
                     if(checker.compare(candidate,check)==1){
@@ -76,9 +78,17 @@ public class CrisnerReasoner<T> {
                         break;
                     }
                 }
+                innerCount++;
+                if(innerCount==599){
+                    System.out.print("hi");
+                }
             }
             if(nonDominated){
                 result.add(candidate);
+            }
+            count++;
+            if(count==599){
+                System.out.print("hi");
             }
         }
         return result;

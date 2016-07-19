@@ -4,6 +4,7 @@ import reasoner.CrisnerReasoner;
 import scheduling.Alternatives;
 import scheduling.Job;
 import scheduling.WorkList;
+import thirdParty.TcpComposeCommunicator;
 import tree.algorithms.AbstractAlgorithm;
 import tree.algorithms.tcpCompose.helpers.WorstFrontierCalculator;
 import tree.structure.Node;
@@ -23,8 +24,8 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
     private CrisnerReasoner crisnerPathReasoner;
     private HashMap<String, String> configValues;
 
-    public BreadthFirstSearch(HashMap<String, String> configValues){
-        super(new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
+    public BreadthFirstSearch(TcpComposeCommunicator prefEvaluatorInterface, HashMap<String, String> configValues){
+        super(prefEvaluatorInterface, new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
         this.configValues = configValues;
         crisnerPathReasoner = new CrisnerReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
         this.configValues.remove("NegativeImpactValueOrderlocation");
@@ -83,7 +84,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
             ArrayList<Alternatives> newAlternatives = workList.getAlternativesList(newJob);
             //creating new frontier entries with expandedPath
             for(Alternatives alternative : newAlternatives){
-                createNewPath(toBeExpandedPath,alternative);
+                createNewPath(newJob, toBeExpandedPath,alternative);
             }
             return true;
         }

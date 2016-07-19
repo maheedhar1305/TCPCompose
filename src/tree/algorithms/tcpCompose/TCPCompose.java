@@ -20,14 +20,13 @@ import java.util.HashMap;
 public class TCPCompose extends AbstractAlgorithm{
 
     //TCPCompose will produce less branches than the breadthfirst search because we account for coverage in the tcpcompose and NOT in BFS.
-    protected TcpComposeCommunicator tcpComposeCommunicator;
     private ResultSet resultSet ;
     private HashMap<String, String> configValues;
     protected CrisnerReasoner crisnerPathReasoner;
 
 
     public TCPCompose(TcpComposeCommunicator prefEvaluatorInterface, HashMap<String, String> configValues) {
-        super(new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
+        super(prefEvaluatorInterface,new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
         crisnerPathReasoner = new CrisnerReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
         resultSet = new ResultSet(crisnerPathReasoner);
         this.tcpComposeCommunicator = prefEvaluatorInterface;
@@ -104,13 +103,13 @@ public class TCPCompose extends AbstractAlgorithm{
             Job newJob = orderedList.get(levelToExplore);
             if (toBeExpandedPath.getCovered().contains(newJob)){
                 //we create a new path and add it to the frontier which says that the level was covered by previous selection
-                createNewPath(toBeExpandedPath,toBeExpandedPath.getCoveredWorkList(newJob));
+                createNewPath(newJob,toBeExpandedPath,toBeExpandedPath.getCoveredWorkList(newJob));
                 return true;
             }
             ArrayList<Alternatives> newAlternatives = workList.getAlternativesList(newJob);
             //creating new frontier entries with expandedPath
             for(Alternatives alternative : newAlternatives){
-                createNewPath(toBeExpandedPath,alternative);
+                createNewPath(newJob,toBeExpandedPath,alternative);
             }
             return true;
         }
