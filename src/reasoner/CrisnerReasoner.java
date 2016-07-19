@@ -6,6 +6,7 @@ import model.Query;
 import model.QueryResult;
 import scheduling.Alternatives;
 import scheduling.Job;
+import scheduling.Response;
 import test.CPTheoryDominanceExperimentDriver;
 import tree.structure.Path;
 import util.Constants;
@@ -111,6 +112,9 @@ public class CrisnerReasoner<T> {
                 else if(o1 instanceof Job && o2 instanceof Job){
                     map1 = ((Job)o1).getAttributes();
                     map2 = ((Job)o2).getAttributes();
+                }else if(o1 instanceof Response && o2 instanceof Response){
+                    map1 = ((Response)o1).getAttributes();
+                    map2 = ((Response)o2).getAttributes();
                 }
                 Constants.CURRENT_MODEL_CHECKER = Constants.MODEL_CHECKER.NuSMV;
                 Constants.SMV_EXEC_COMMAND = nuSMVLocation;
