@@ -30,7 +30,7 @@ public class ResultSet {
     public void removeLessPreferredSolutions(Path element){
         for(Iterator<Path> iterable = tcpComposeResultSet.iterator();iterable.hasNext();){
             Path consideredElement = iterable.next();
-            if(crisnerPathReasoner.isBetterThan(element,consideredElement)){
+            if(crisnerPathReasoner.isBetterThanOrIncomparable(element,consideredElement)){
                 iterable.remove();
             }
         }
@@ -41,7 +41,7 @@ public class ResultSet {
         //result set should not be done in each step
         for(Iterator<Path> iter = tcpComposeResultSet.iterator();iter.hasNext();){
             Path consideredElement = iter.next();
-            if(crisnerPathReasoner.isBetterThan(consideredElement,element)){
+            if(crisnerPathReasoner.isBetterThanOrIncomparable(consideredElement,element)){
                 return false;
             }
         }

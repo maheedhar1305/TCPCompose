@@ -49,4 +49,16 @@ public abstract class AbstractAlgorithm implements Algorithm {
         frontier.addElement(pathObject);
     }
 
+    public Path constructPathGivenValues(Job newJob, Path toBeExpandedPath, Alternatives alternative){
+        Node newNode = new Node(alternative,toBeExpandedPath.getWorkingLevel()+1);
+        ArrayList<Node> newPath = new ArrayList<>(toBeExpandedPath.getPath());
+        newPath.add(newNode);
+        Path pathObject = new Path(newPath,toBeExpandedPath.getWorkingLevel()+1);
+        if(worstFrontierCalculator!=null){
+            pathObject.setPreferenceValuation(worstFrontierCalculator.computeValWorstFrontier(toBeExpandedPath.getPreferenceValuation(),alternative.getAttributes()));
+            pathObject.setBetaMostPreferedCompletion(worstFrontierCalculator.computeBetaWorstFrontier(toBeExpandedPath.getBetaMostPreferedCompletion(),alternative.getAttributes(),toBeExpandedPath.getPreferenceValuation()));
+        }
+        return pathObject;
+    }
+
 }

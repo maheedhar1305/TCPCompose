@@ -48,7 +48,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
         return result;
     }
 
-    public void findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
+    public ArrayList<Path> findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
         HashMap<String,String> startingBetaMostPreferedCompletion = getPreferedValues();
         HashMap<String,String> startingPreferenceValuation = initialiseValuation(startingBetaMostPreferedCompletion);
         Alternatives<String> startalt = new Alternatives<>("StartNode",6);
@@ -73,6 +73,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
             System.out.println("#####The following solution was added to result set####");
             path.printPath(orderedList);
         }
+        return orderedBaseCaseResults;
     }
 
     public boolean exploreNextLevel(Path toBeExpandedPath,ArrayList<Job> orderedList,WorkList workList){

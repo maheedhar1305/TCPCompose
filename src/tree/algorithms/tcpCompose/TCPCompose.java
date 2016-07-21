@@ -33,7 +33,7 @@ public class TCPCompose extends AbstractAlgorithm{
         this.configValues = configValues;
     }
 
-    private HashMap<String,String> getPreferedValues() {
+    public HashMap<String,String> getPreferedValues() {
         HashMap<String,String> result = new HashMap<>(configValues);
         result.remove("NegativeImpactValueOrderlocation");
         result.remove("NegativeImpactPrefOrderlocation");
@@ -42,7 +42,7 @@ public class TCPCompose extends AbstractAlgorithm{
         return result;
     }
 
-    private HashMap<String,String> initialiseValuation(HashMap<String, String> startingBetaMostPreferedCompletion) {
+    public HashMap<String,String> initialiseValuation(HashMap<String, String> startingBetaMostPreferedCompletion) {
         HashMap<String,String> result = new HashMap<>();
         for(String key : startingBetaMostPreferedCompletion.keySet()){
             result.put(key,"NULL");
@@ -50,7 +50,7 @@ public class TCPCompose extends AbstractAlgorithm{
         return result;
     }
 
-    public void findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
+    public ArrayList<Path> findOptimalCompositions(WorkList workList, ArrayList<Job> orderedList){
         HashMap<String,String> startingBetaMostPreferedCompletion = getPreferedValues();
         HashMap<String,String> startingPreferenceValuation = initialiseValuation(startingBetaMostPreferedCompletion);
         Alternatives<String> startalt = new Alternatives<>("StartNode",6);
@@ -62,13 +62,19 @@ public class TCPCompose extends AbstractAlgorithm{
         tempPath.setBetaMostPreferedCompletion(startingBetaMostPreferedCompletion);
         tempPath.setPreferenceValuation(startingPreferenceValuation);
         frontier.addElement(tempPath);
+        ArrayList<Path> finalResultsForAnalysis = new ArrayList<Path>();
         while(!frontier.isEmpty()){
             Path candidate = chooseNextToExpand();
             updateCoverage(candidate);
             frontier.removeFromFrontier(candidate);
+            boolean flag = true;
             if(!exploreNextLevel(candidate,orderedList,workList)){
                 //we have reached goal node in one of the frontiers
                 if(resultSet.addElementToResultSet(candidate)){
+                    if(flag){
+                        flag = false;
+                        finalResultsForAnalysis.add(candidate);
+                    }
                     System.out.println("#####The following solution was added to result set####");
                 }else{
                     System.out.println("$$$$$The following solution was NOT added to result set since it was not a non dominating set$$$$");
@@ -81,6 +87,8 @@ public class TCPCompose extends AbstractAlgorithm{
             System.out.println("&&&&&The following solution&&&&");
             path.printPath(orderedList);
         }
+        finalResultsForAnalysis.addAll(resultSet.getTcpComposeResultSet());
+        return finalResultsForAnalysis;
     }
 
     /*It makes sense to have covered Jobs for each Path in the frontier because they may vary from branch to branch
