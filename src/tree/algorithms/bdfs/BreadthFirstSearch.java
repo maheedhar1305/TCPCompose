@@ -28,15 +28,15 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
         super(prefEvaluatorInterface, new WorstFrontierCalculator(configValues.get("NegativeImpactValueOrderlocation")));
         this.configValues = configValues;
         crisnerPathReasoner = new CrisnerReasoner(configValues.get("NuSMVLocation"),configValues.get("NegativeImpactPrefOrderlocation"));
-        this.configValues.remove("NegativeImpactValueOrderlocation");
-        this.configValues.remove("NegativeImpactPrefOrderlocation");
-        this.configValues.remove("OrganizationalCIAPrefOrderlocation");
-        this.configValues.remove("NuSMVLocation");
         resultSet = new HashSet<>();
     }
 
     private HashMap<String,String> getPreferedValues() {
         HashMap<String,String> result = new HashMap<>(configValues);
+        result.remove("NegativeImpactValueOrderlocation");
+        result.remove("NegativeImpactPrefOrderlocation");
+        result.remove("OrganizationalCIAPrefOrderlocation");
+        result.remove("NuSMVLocation");
         return result;
     }
 
