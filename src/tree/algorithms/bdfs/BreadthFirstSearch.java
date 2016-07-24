@@ -34,6 +34,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
     private HashMap<String,String> getPreferedValues() {
         HashMap<String,String> result = new HashMap<>(configValues);
         result.remove("NegativeImpactValueOrderlocation");
+        result.remove("fileName");
         result.remove("NegativeImpactPrefOrderlocation");
         result.remove("OrganizationalCIAPrefOrderlocation");
         result.remove("NuSMVLocation");

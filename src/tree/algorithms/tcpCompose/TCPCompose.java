@@ -39,6 +39,7 @@ public class TCPCompose extends AbstractAlgorithm{
         result.remove("NegativeImpactPrefOrderlocation");
         result.remove("OrganizationalCIAPrefOrderlocation");
         result.remove("NuSMVLocation");
+        result.remove("fileName");
         return result;
     }
 
@@ -67,27 +68,30 @@ public class TCPCompose extends AbstractAlgorithm{
             Path candidate = chooseNextToExpand();
             updateCoverage(candidate);
             frontier.removeFromFrontier(candidate);
-            boolean flag = true;
+            //boolean flag = true;
             if(!exploreNextLevel(candidate,orderedList,workList)){
                 //we have reached goal node in one of the frontiers
-                if(resultSet.addElementToResultSet(candidate)){
-                    if(flag){
-                        flag = false;
-                        finalResultsForAnalysis.add(candidate);
-                    }
-                    System.out.println("#####The following solution was added to result set####");
-                }else{
-                    System.out.println("$$$$$The following solution was NOT added to result set since it was not a non dominating set$$$$");
-                }
+//                if(resultSet.addElementToResultSet(candidate)){
+
+//                    if(flag){
+//                        flag = false;
+//                        finalResultsForAnalysis.add(candidate);
+//                    }
+                System.out.println("#####The following solution was added to result set####");
+//                }else{
+//                    System.out.println("$$$$$The following solution was NOT added to result set since it was not a non dominating set$$$$");
+//                }
                 candidate.printPath(orderedList);
+                finalResultsForAnalysis.add(candidate);
+                break;
             }
         }
-        System.out.println("The non-dominated sets in the end comprises of");
-        for(Path path : resultSet.getTcpComposeResultSet()){
-            System.out.println("&&&&&The following solution&&&&");
-            path.printPath(orderedList);
-        }
-        finalResultsForAnalysis.addAll(resultSet.getTcpComposeResultSet());
+//        System.out.println("The non-dominated sets in the end comprises of");
+//        for(Path path : resultSet.getTcpComposeResultSet()){
+//            System.out.println("&&&&&The following solution&&&&");
+//            path.printPath(orderedList);
+//        }
+//        finalResultsForAnalysis.addAll(resultSet.getTcpComposeResultSet());
         return finalResultsForAnalysis;
     }
 

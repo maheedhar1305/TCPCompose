@@ -87,7 +87,7 @@ public class CrisnerReasoner<T> {
 
     public boolean isStrictlyBetterThan(T element, T consideredElement) {
         CrisnerPathComparator checker = new CrisnerPathComparator();
-        if(checker.compare(element,consideredElement)==-1){
+        if(checker.compareFinally(element,consideredElement)==-1){
             return true;
         }else {
             return false;
@@ -114,6 +114,53 @@ public class CrisnerReasoner<T> {
                 }else if(o1 instanceof Response && o2 instanceof Response){
                     map1 = ((Response)o1).getAttributes();
                     map2 = ((Response)o2).getAttributes();
+                }
+                Constants.CURRENT_MODEL_CHECKER = Constants.MODEL_CHECKER.NuSMV;
+                Constants.SMV_EXEC_COMMAND = nuSMVLocation;
+                Set<Outcome> outcomes = new HashSet<Outcome>();
+                Outcome out1 = new Outcome(map1);
+                out1.setLabel("BETTER");
+                outcomes.add(out1);
+                Outcome out2 = new Outcome(map2);
+                out2.setLabel("WORSE");
+                outcomes.add(out2);
+                Query q = new Query(PreferenceQuery.QueryType.DOMINANCE, psFileName, outcomes);
+                QueryResult result = new CPTheoryDominanceExperimentDriver().executeQuery(q);
+                //Using negative numbers to say "this is less than that", positive numbers to say "this is more than that" and 0 to say "these 2 things are equal" has been in many computer languages for 30+ years.
+                //since we are ordering in descending order with most impactful first. Thus we are reversing -1 and +1 roles
+                if(result.getResult()){
+                    return -1; //todo verify
+                }else{
+                    Set<Outcome> outcomes1 = new HashSet<Outcome>();
+                    Outcome out3 = new Outcome(map1);
+                    out3.setLabel("WORSE");
+                    outcomes1.add(out3);
+                    Outcome out4 = new Outcome(map2);
+                    out4.setLabel("BETTER");
+                    outcomes1.add(out4);
+                    Query q1 = new Query(PreferenceQuery.QueryType.DOMINANCE, psFileName, outcomes1);
+                    QueryResult result1 = new CPTheoryDominanceExperimentDriver().executeQuery(q1);
+                    if(result1.getResult()) {
+                        return 1;
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+            }catch (Exception e){
+                //this is supposed to happen during BFS because no values for beta and val in BFS
+                System.out.println("Error in comparator : " + e);
+                return 0;
+            }
+        }
+
+        public int compareFinally(Object o1, Object o2) {
+            try {
+                HashMap<String, String> map1 = null;
+                HashMap<String, String> map2 = null;
+                if(o1 instanceof Path && o2 instanceof Path){
+                    map1 = ((Path)o1).getPreferenceValuation();
+                    map2 = ((Path)o2).getPreferenceValuation();
                 }
                 Constants.CURRENT_MODEL_CHECKER = Constants.MODEL_CHECKER.NuSMV;
                 Constants.SMV_EXEC_COMMAND = nuSMVLocation;
