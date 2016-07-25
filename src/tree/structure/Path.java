@@ -107,4 +107,13 @@ public class Path {
     public void setCovered(HashSet<Job> covered) {
         this.covered = covered;
     }
+
+    public int getNumberOfResponses(){
+        HashSet<String> uniqueResponses = new HashSet<>();
+        for(int i =1; i<path.size();i++){
+            Node node = path.get(i);
+            uniqueResponses.add(node.toString());
+        }
+        return uniqueResponses.size();
+    }
 }
