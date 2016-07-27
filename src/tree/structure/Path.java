@@ -101,11 +101,11 @@ public class Path {
     }
 
     public void setCoveredWorkList(HashMap<Job, Alternatives> coveredWorkList) {
-        this.coveredWorkList = coveredWorkList;
+        this.coveredWorkList = new HashMap<>(coveredWorkList);
     }
 
     public void setCovered(HashSet<Job> covered) {
-        this.covered = covered;
+        this.covered = new HashSet<>(covered);
     }
 
     public int getNumberOfResponses(){
