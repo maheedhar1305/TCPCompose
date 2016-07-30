@@ -62,7 +62,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
         tempPath.setPreferenceValuation(startingPreferenceValuation);
         frontier.addElement(tempPath);
         while(!frontier.isEmpty()){
-            Path candidate = chooseNextToExpand();
+            Path candidate = chooseNextToExpand(orderedList);
             frontier.removeFromFrontier(candidate);
             if(!exploreNextLevel(candidate,orderedList,workList)){
                 resultSet.add(candidate);
@@ -94,7 +94,7 @@ public class BreadthFirstSearch extends AbstractAlgorithm{
             return false;
     }
 
-    public Path chooseNextToExpand(){
+    public Path chooseNextToExpand(ArrayList<Job> jobList){
         return frontier.getCurrentFrontier()[0];
         //choose the best one to expand,so first one is chosen because this is breadth first search
     }

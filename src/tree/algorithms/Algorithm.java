@@ -15,6 +15,6 @@ public interface Algorithm {
 
     public boolean exploreNextLevel(Path toBeExpandedPath, ArrayList<Job> orderedList, WorkList workList);
 
-    public Path chooseNextToExpand();
+    public Path chooseNextToExpand(ArrayList<Job> jobList);
 
 }

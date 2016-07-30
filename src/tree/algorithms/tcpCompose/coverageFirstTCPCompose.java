@@ -1,9 +1,11 @@
 package tree.algorithms.tcpCompose;
 
 import scheduling.Alternatives;
+import scheduling.Job;
 import thirdParty.TcpComposeCommunicator;
 import tree.structure.Path;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -17,7 +19,7 @@ public class coverageFirstTCPCompose extends TCPCompose {
     }
 
     //The emphasis here is to expand the response which has the most coverage going forward
-    public Path chooseNextToExpand(){
+    public Path chooseNextToExpand(ArrayList<Job> jobList){
         HashSet<Path> result = new HashSet<>();
         int coverageSize = 0; //initialise
         for(Path path : frontier.getCurrentFrontier()){

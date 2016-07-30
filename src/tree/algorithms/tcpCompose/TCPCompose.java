@@ -65,7 +65,7 @@ public class TCPCompose extends AbstractAlgorithm{
         frontier.addElement(tempPath);
         ArrayList<Path> finalResultsForAnalysis = new ArrayList<Path>();
         while(!frontier.isEmpty()){
-            Path candidate = chooseNextToExpand();
+            Path candidate = chooseNextToExpand(orderedList);
             updateCoverage(candidate);
             frontier.removeFromFrontier(candidate);
             //boolean flag = true;
@@ -129,7 +129,7 @@ public class TCPCompose extends AbstractAlgorithm{
             return false;
     }
 
-    public Path chooseNextToExpand(){
+    public Path chooseNextToExpand(ArrayList<Job> jobList){
         return (Path)crisnerPathReasoner.returnNonDominatedSet(frontier.getCurrentFrontier()).get(0); //choose the best one to expand,so first one is chosen
     }
 }
