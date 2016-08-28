@@ -68,15 +68,19 @@ public class TCPComposeWithGreedyCoverage extends TCPCompose{
             int coverage = 0;
             //We check if levelToExplore is less than joblist.size because if thats the case, then we have already reached the leaf and we dont have anything more to check
             for (Path ex : rankedNonDominatedSet.get(highest)) {
+                //In case there are multiple paths that have the highest coverage of jobs for the bottom most response
                 if (ex.getCovered().size() > coverage) {
+                    //choose the path with the most coverage on current known job list
                     coverage = ex.getCovered().size();
                     path = ex;
                 }
                 if (ex.getCovered().size() == coverage && ex.getCovered().size()!=0) {
+                    //if there are paths with same coverage, then choose the path that does that with the minimal number of responses
                     if (ex.getNumberOfResponses() < path.getNumberOfResponses()) {
                         path = ex;
                     }
                 }else if(ex.getCovered().size()==0){
+                    //special case..debug here in complex model irs2.prop to understand
                     path = ex;
                 }
             }
