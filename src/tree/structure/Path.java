@@ -27,6 +27,15 @@ public class Path {
         workingLevel = currentLevel;
     }
 
+    public Path(Path path){
+        this.path = new ArrayList<>(path.getPath());
+        this.workingLevel = path.getWorkingLevel();
+        this.covered = new HashSet<>(path.getCovered());
+        this.coveredWorkList = new HashMap<>(path.getCoveredWorkList());
+        this.betaMostPreferedCompletion = new HashMap<>(path.getBetaMostPreferedCompletion());
+        this.preferenceValuation = new HashMap<>(path.getPreferenceValuation());
+    }
+
     public HashMap<String, String> getBetaMostPreferedCompletion() {
         return betaMostPreferedCompletion;
     }
