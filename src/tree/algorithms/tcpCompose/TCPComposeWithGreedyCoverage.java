@@ -73,8 +73,7 @@ public class TCPComposeWithGreedyCoverage extends TCPCompose{
                     //choose the path with the most coverage on current known job list
                     coverage = ex.getCovered().size();
                     path = ex;
-                }
-                if (ex.getCovered().size() == coverage && ex.getCovered().size()!=0) {
+                }else if (ex.getCovered().size() == coverage && ex.getCovered().size()!=0) {
                     //if there are paths with same coverage, then choose the path that does that with the minimal number of responses
                     if (ex.getNumberOfResponses() < path.getNumberOfResponses()) {
                         path = ex;
